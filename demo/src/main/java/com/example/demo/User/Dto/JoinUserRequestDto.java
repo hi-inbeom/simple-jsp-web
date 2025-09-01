@@ -1,6 +1,8 @@
-package com.example.demo.User;
+package com.example.demo.User.Dto;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.example.demo.User.UserVo;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

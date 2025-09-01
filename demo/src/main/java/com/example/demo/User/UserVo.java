@@ -14,10 +14,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class UserVo extends BaseVo {
-    private Long id;
-    private String userId;
-    private String password;
-    private String nickname;
-    private String email;
-    private int role;
+    private Long id;			// 기본키
+    private String userId;		// 아이디
+    private String password;	// 비밀번호
+    private String nickname;	// 닉네임
+    private String email;		// 이메일
+    private int role;			// 유저 권한 0 어드민 1 일반 회원
 }

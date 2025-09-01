@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+	<!-- 결과값 담기 -->
+    <resultMap id="UserResultMap" type="com.example.demo.User.UserVo">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="role" column="role"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+    
+    <!-- 아이디로 유저 조회 -->
+    <select id="findByUserId" parameterType="String" resultMap="UserResultMap">
+        SELECT *
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 회원 등록 -->
+    <insert id="save" parameterType="com.example.demo.User.UserVo">
+        INSERT INTO user (user_id, password, nickname, email, created_at)
+        VALUES (#{userId}, #{password}, #{nickname}, #{email}, NOW())
+    </insert>
+
+    <!-- 전체 유저 조회 -->
+    <select id="findAll" resultMap="UserResultMap">
+        SELECT *
+        FROM user
+    </select>
+
+    <!-- 유저 수정 -->
+    <update id="update" parameterType="com.example.demo.User.UserVo">
+        UPDATE user
+        SET
+            password = #{password},
+            nickname = #{nickname},
+            email = #{email},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 유저 삭제 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM user
+        WHERE id = #{id}
+    </delete>
+</mapper>

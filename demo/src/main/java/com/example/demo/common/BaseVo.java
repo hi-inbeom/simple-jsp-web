@@ -8,10 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BaseVo {
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime updatedAt;
-
-    public void setUpdatedAt() {
-        this.updatedAt = LocalDateTime.now();
-    }
+	private LocalDateTime createdAt = LocalDateTime.now();
+	private LocalDateTime updatedAt;
+	public void setUpdatedAt() {
+		this.updatedAt = LocalDateTime.now();
+	}
 }

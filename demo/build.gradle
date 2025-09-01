@@ -19,7 +19,9 @@ repositories {
 }
 
 dependencies {
-    // Spring Boot 기본 웹 모듈 (JSP 지원을 위해 `spring-boot-starter-web`만 추가)
+    /* Spring Boot 기본 웹 모듈 (JSP 지원을 위해 `spring-boot-starter-web`만 추가)
+    *
+    */
     implementation 'org.springframework.boot:spring-boot-starter-web'
     
     // Spring Validation 검증 프레임워크
