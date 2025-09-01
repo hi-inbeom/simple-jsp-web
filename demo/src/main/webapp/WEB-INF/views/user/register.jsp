@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>회원가입</title>
@@ -40,6 +41,9 @@
             border-radius: 6px;
             box-sizing: border-box;
         }
+        .password-container {
+		    position: relative; /* 버튼 절대 위치 기준 */
+		}
 
         .toggle-password {
             position: absolute;
@@ -83,38 +87,52 @@
         .register-container button.submit-btn:hover {
             background-color: #45a049;
         }
+        .error {
+        	text-align: left;
+		    color: red;
+		    font-size: 10px;
+		    margin-top: 2px;
+		    display: block;
+		}
     </style>
 </head>
 <body>
 <div class="register-container">
     <h2>회원가입</h2>
-    <form action="/user/register" method="post" autocomplete="off">
-        <div class="form-group">
-            <input type="text" name="userId" placeholder="아이디" required>
-        </div>
+	<form:form modelAttribute="joinUserRequestDto" action="/user/api/register" method="post" autocomplete="off">
+	    <div class="form-group">
+	        <form:input path="userId" placeholder="아이디"/>
+	        <form:errors path="userId" cssClass="error"/>
+	    </div>
+	
+		<div class="form-group">
+		    <div class="password-container">
+		        <form:password path="password" placeholder="비밀번호 (4자 ~ 16자)"/>
+		        <button type="button" id="togglePassword" class="toggle-password">
+		            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" 
+		                 stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="eye-off">
+		                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+		                <circle cx="12" cy="12" r="3"/>
+		                <line class="cross" x1="1" y1="1" x2="23" y2="23"/>
+		            </svg>
+		        </button>
+		    </div>
+		    <form:errors path="password" cssClass="error"/>
+		</div>
+	
+	    <div class="form-group">
+	        <form:input path="nickname" placeholder="닉네임"/>
+	        <form:errors path="nickname" cssClass="error"/>
+	    </div>
+	
+	    <div class="form-group">
+	        <form:input path="email" placeholder="이메일"/>
+	        <form:errors path="email" cssClass="error"/>
+	    </div>
+	
+	    <button type="submit" class="submit-btn">회원가입</button>
+	</form:form>
 
-        <div class="form-group">
-            <input id="password" type="password" name="password" placeholder="비밀번호 (4자 ~ 16자)" required>
-            <button type="button" id="togglePassword" class="toggle-password">
-			    <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" 
-			         stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="eye-off">
-			        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-			        <circle cx="12" cy="12" r="3"/>
-			        <line class="cross" x1="1" y1="1" x2="23" y2="23"/>
-			    </svg>
-			</button>
-        </div>
-
-        <div class="form-group">
-            <input type="text" name="nickname" placeholder="닉네임" required>
-        </div>
-
-        <div class="form-group">
-            <input type="email" name="email" placeholder="이메일" required>
-        </div>
-
-        <button type="submit" class="submit-btn">회원가입</button>
-    </form>
 </div>
 
 <script>

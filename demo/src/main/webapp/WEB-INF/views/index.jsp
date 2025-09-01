@@ -75,11 +75,10 @@
     </style>
 </head>
 <body>
-
 <jsp:include page="test.jsp" />
 <div class="login-container">
     <h2>로그인</h2>
-    <form action="/user/login" method="post">
+    <form action="/user/api/login" method="post">
         <input type="text" name="userId" placeholder="아이디" required><br>
         <div class="password-container">
 	        <input type="password" id="password" name="password" placeholder="비밀번호" required><br>

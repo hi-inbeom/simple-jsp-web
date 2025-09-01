@@ -19,19 +19,23 @@ import lombok.Setter;
 @Builder
 public class JoinUserRequestDto {
 
-    @Pattern(regexp = "^[a-z0-9-_]{4,20}$", message = "아이디는 특수문자를 제외한 4~20자리여야 합니다.")
+    @Pattern(regexp = "^[a-z0-9-_]{4,20}$",
+    		message = "아이디는 특수문자를 제외한 4~20자리여야 합니다.")
     @NotBlank(message = "아이디는 필수 입력 값입니다.")
     private String userId;
 
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}", message = "비밀번호는 8~16자 영문, 숫자, 특수문자")
+    @Pattern(regexp = "[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{4,16}", 
+            message = "비밀번호는 4~16자, 영문/숫자/특수문자만 사용 가능합니다.")
     @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
     private String password;
 
-    @Pattern(regexp = "^[a-zA-Z0-9-_]{2,10}$", message = "닉네임은 2~10자리여야 합니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9-_]{2,10}$",
+    		message = "닉네임은 2~10자리여야 합니다.")
     @NotBlank(message = "닉네임은 필수 입력 값입니다.")
     private String nickname;
 
-    @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
+    @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$",
+    		message = "이메일 형식이 올바르지 않습니다.")
     @NotBlank(message = "이메일은 필수 입력 값입니다.")
     private String email;
 

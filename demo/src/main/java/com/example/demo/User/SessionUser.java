@@ -17,7 +17,6 @@ public class SessionUser {
     private String nickname;
     private String email;
     private int role;
-    
 
     // 임시 생성 메서드 (테스트용)
     public static SessionUser tempUser() {

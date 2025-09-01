@@ -98,12 +98,12 @@
         <!-- 닉네임 -->
         <div class="profile-row">
             <label for="nickname">닉네임</label>
-            <input type="text" id="nickname" name="nickname" value="${user.nickname}" disabled>
+            <input type="text" id="nickname" name="nickname" value="${sessionUser.nickname}" disabled>
         </div>
         <!-- 이메일 -->
         <div class="profile-row">
             <label for="email">이메일</label>
-            <input type="email" id="email" name="email" value="${user.email}" disabled>
+            <input type="email" id="email" name="email" value="${sessionUser.email}" disabled>
         </div>
         <!-- 비밀번호 -->
         <div class="profile-row">
@@ -132,7 +132,7 @@
     <div class="section-divider"></div>
 
     <!-- 회원 탈퇴 -->
-    <form id="deleteForm" action="/user/delete" method="post">
+    <form id="deleteForm" action="/user/api/delete" method="post">
         <button type="button" id="deleteBtn" class="delete-btn">회원 탈퇴</button>
     </form>
 </div>

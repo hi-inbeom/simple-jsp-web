@@ -3,6 +3,7 @@ package com.example.demo.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.User.Dto.JoinUserRequestDto;
 import com.example.demo.User.Dto.LoginUserRequestDto;
 
 import lombok.RequiredArgsConstructor;
@@ -29,13 +30,16 @@ public class UserService {
     /**
      * 회원가입
      */
-    public int register(User user) {
-    	return userDao.register(user);
+    public SessionUser register(JoinUserRequestDto dto) {
+    	validateDuplicationUserId(dto.getUserId());
+    	userDao.register(dto.toVo());
+    	User user = userDao.findByUserId(dto.getUserId());
+    	return makeSessionUser(user);
     }
     
     
     /**
-     * DB요청 반환 DTO
+     * VO -> DTO
      */
     private SessionUser makeSessionUser(User user) {
     	return SessionUser.builder()
@@ -47,6 +51,24 @@ public class UserService {
                 .build();
     }
 
+    /**
+     * 아이디 중복 검증(회원가입)
+     */
+    private void validateDuplicationUserId(String userId) {
+    	User user = userDao.findByUserId(userId);
+        if (user != null) {
+            throw new UserException("존재하는 아이디입니다.");
+        }
+    }
+    /**
+     * 아이디 중복 검증(계정찾기)
+     */
+    private void validateExistUserId(String userId) {
+    	User user = userDao.findByUserId(userId);
+        if (user == null) {
+            throw new UserException("존재하지 않는 아이디입니다.");
+        }
+    }
     /**
      * 비밀번호 검증
      */
