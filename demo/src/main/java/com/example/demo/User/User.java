@@ -1,5 +1,7 @@
 package com.example.demo.User;
 
+import java.security.Timestamp;
+
 import com.example.demo.common.BaseVo;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserVo extends BaseVo {
+public class User extends BaseVo {
     private Long id;			// 기본키
     private String userId;		// 아이디
     private String password;	// 비밀번호

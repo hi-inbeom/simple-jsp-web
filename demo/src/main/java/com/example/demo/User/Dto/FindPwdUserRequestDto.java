@@ -2,7 +2,7 @@ package com.example.demo.User.Dto;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.example.demo.User.UserVo;
+import com.example.demo.User.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +19,10 @@ public class FindPwdUserRequestDto {
 	private String userId;
 	private String password;
 	
-    public UserVo toVo() {
+    public User toVo() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         
-        UserVo userVo = UserVo.builder()
+        User userVo = User.builder()
                 .userId(this.userId)
                 .password(encoder.encode(this.password))
                 .build();

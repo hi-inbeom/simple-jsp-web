@@ -5,7 +5,7 @@
 
 <mapper namespace="UserMapper">
 	<!-- 결과값 담기 -->
-    <resultMap id="UserResultMap" type="com.example.demo.User.UserVo">
+    <resultMap id="UserResultMap" type="com.example.demo.User.User">
         <id property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
@@ -24,7 +24,7 @@
     </select>
 
     <!-- 회원 등록 -->
-    <insert id="save" parameterType="com.example.demo.User.UserVo">
+    <insert id="save" parameterType="com.example.demo.User.User">
         INSERT INTO user (user_id, password, nickname, email, created_at)
         VALUES (#{userId}, #{password}, #{nickname}, #{email}, NOW())
     </insert>
@@ -36,7 +36,7 @@
     </select>
 
     <!-- 유저 수정 -->
-    <update id="update" parameterType="com.example.demo.User.UserVo">
+    <update id="update" parameterType="com.example.demo.User.User">
         UPDATE user
         SET
             password = #{password},

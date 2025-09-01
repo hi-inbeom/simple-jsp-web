@@ -18,7 +18,7 @@ public class UserDao {
     /**
      * 아이디로 유저 조회
      */
-    public UserVo findByUserId(String userId) {
+    public User findByUserId(String userId) {
         return sqlSession.selectOne(NAMESPACE + "findByUserId", userId);
     }
 
@@ -26,21 +26,21 @@ public class UserDao {
      * 회원가입
      * @return 
      */
-    public int register(UserVo userVo) {
+    public int register(User userVo) {
         return sqlSession.insert(NAMESPACE + "save", userVo);
     }
 
     /**
      * 모든 유저 조회
      */
-    public List<UserVo> findAll() {
+    public List<User> findAll() {
         return sqlSession.selectList(NAMESPACE + "findAll");
     }
 
     /**
      * 유저 업데이트
      */
-    public int update(UserVo userVo) {
+    public int update(User userVo) {
         return sqlSession.update(NAMESPACE + "update", userVo);
     }
 
