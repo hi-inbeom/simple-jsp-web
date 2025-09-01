@@ -22,6 +22,38 @@ public class UserController {
 
     private final UserService userService;
     
+    /* ===================== 화면이동 ===================== */
+
+
+    /**
+     * 회원가입 화면
+     */
+    @GetMapping("/register")
+    public String registerPage() {
+        return "user/register"; // register.jsp
+    }
+
+    /**
+     * 계정 찾기 화면
+     */
+    @GetMapping("/find")
+    public String findAccountPage() {
+        return "user/findAccount"; // findAccount.jsp
+    }
+
+    /**
+     * 마이페이지 화면
+     */
+    @GetMapping("/mypage")
+    public String mypage(Model model) {
+        // 테스트용 더미 유저 정보
+        UserVo user = new UserVo();
+        user.setNickname("홍길동");
+        user.setEmail("test@test.com");
+        model.addAttribute("user", user);
+
+        return "user/mypage"; // mypage.jsp
+    }
     /* ===================== 로그인/로그아웃 프로세스 ===================== */
     /**
      * 로그인 처리
@@ -49,45 +81,4 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
-
-    /* ===================== 회원가입 프로세스 ===================== */
-    /**
-     * 회원가입 폼 이동
-     */
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
-        return "register";
-    }
-
-    /**
-     * 회원가입 처리
-     */
-    @PostMapping("/register")
-    public String register(@Valid @ModelAttribute JoinUserRequestDto dto,
-                           HttpSession session,
-                           Model model) {
-        try {
-            userService.register(dto.toVo());
-            model.addAttribute("message", "회원가입이 완료되었습니다. 로그인 해주세요.");
-            return "login"; // 회원가입 성공 후 로그인 페이지
-        } catch (Exception e) {
-            model.addAttribute("error", "회원가입 중 오류가 발생했습니다: " + e.getMessage());
-            return "register";
-        }
-    }
-
-    /**
-     * 마이페이지
-     */
-    @GetMapping("/mypage")
-    public String myPage(HttpSession session, Model model) {
-        UserVo loginUser = (UserVo) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            return "redirect:/user/login";
-        }
-        model.addAttribute("user", loginUser);
-        return "mypage"; // mypage.jsp
-    }
-
-
 }

@@ -54,6 +54,7 @@
 </head>
 <body>
 
+<jsp:include page="test.jsp" />
 <div class="login-container">
     <h2>로그인</h2>
     <form action="/user/login" method="post">
