@@ -88,7 +88,7 @@
 <body>
 <div class="register-container">
     <h2>회원가입</h2>
-    <form action="/user/register" method="post">
+    <form action="/user/register" method="post" autocomplete="off">
         <div class="form-group">
             <input type="text" name="userId" placeholder="아이디" required>
         </div>

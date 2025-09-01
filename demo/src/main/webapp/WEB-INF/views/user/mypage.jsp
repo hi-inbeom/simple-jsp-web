@@ -94,7 +94,7 @@
 <div class="profile-container">
     <h2>환영합니다, <strong>${user.nickname}</strong>님!</h2>
     
-    <form id="profileForm" action="/user/update" method="post">
+    <form id="profileForm" action="/user/update" method="post" autocomplete="off">
         <!-- 닉네임 -->
         <div class="profile-row">
             <label for="nickname">닉네임</label>
