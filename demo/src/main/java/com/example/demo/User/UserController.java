@@ -28,7 +28,7 @@ public class UserController {
 	 */
 	@GetMapping("/find")
 	public String findAccountPage() {
-		return "user/findAccount";
+		return "user/find";
 	}
 
 	/**

@@ -1,7 +1,5 @@
 package com.example.demo.User;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Controller;
@@ -10,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.User.Dto.JoinUserRequestDto;
@@ -93,6 +92,24 @@ public class UserApiController {
 
         // 탈퇴 후 메인 페이지나 안내 페이지로 이동
         return "redirect:/";
+	}
+	
+	/* ===================== 회원수정 프로세스 ===================== */
+	/**
+	 * 회원 찾기
+	 */
+	public String find(@RequestBody String email, HttpSession session) {
+		if (email == null || email == "") {
+			return "redirect:/user/find";
+		}
+		SessionUser sessionUser = userService.find(email);
+		
+        // 로그인 세션 제거
+	    session.removeAttribute("sessionUser");
+		session.setAttribute("sessionUser", sessionUser);
+	    
+		
+		return "redirect:/";
 	}
 
 	/* ===================== 회원수정 프로세스 ===================== */

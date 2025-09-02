@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder	
-public class FindPwdUserRequestDto {
+public class FindUserRequestDto {
 	private String userId;
 	private String password;
 	

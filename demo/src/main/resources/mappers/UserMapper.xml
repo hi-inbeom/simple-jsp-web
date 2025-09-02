@@ -53,10 +53,16 @@
 	    WHERE user_id = #{userId}
 	</update>
 
-
     <!-- 유저 삭제 -->
     <delete id="delete" parameterType="Long">
         DELETE FROM user
         WHERE id = #{id}
     </delete>
+    
+    <!-- 아이디로 유저 조회 -->
+    <select id="findByUserId" parameterType="String" resultMap="UserResultMap">
+        SELECT *
+        FROM user
+        WHERE email = #{email}
+    </select>
 </mapper>

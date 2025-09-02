@@ -54,6 +54,15 @@ public class UserService {
 		User user = userDao.findByUserId(dto.getUserId());
 		return makeSessionUser(user);
 	}
+	
+	/**
+	 * 계정찾기
+	 * @return 
+	 */
+	public SessionUser find(String email) {
+		User user = userDao.findByEmail(email);
+		return makeSessionUser(user);
+	}
     
     
     /**
