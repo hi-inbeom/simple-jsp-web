@@ -1,5 +1,9 @@
 package com.example.demo.User;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.User.Dto.JoinUserRequestDto;
 import com.example.demo.User.Dto.LoginUserRequestDto;
+import com.example.demo.User.Dto.UpdateUserRequestDto;
+import com.example.demo.User.Dto.UpdateUserResponseDto;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -47,6 +53,9 @@ public class UserApiController {
 	}
 
 	/* ===================== 회원가입 프로세스 ===================== */
+	/**
+	 * 회원 가입
+	 */
 	@PostMapping("/register")
 	public String register(@Valid @ModelAttribute JoinUserRequestDto dto,
 							BindingResult bindingResult,
@@ -63,5 +72,98 @@ public class UserApiController {
 		session.setAttribute("sessionUser", sessionUser);
 
 		return "redirect:/";
+	}
+
+	/* ===================== 회원탈퇴 프로세스 ===================== */
+	/**
+	 * 회원 탈퇴
+	 */
+	@PostMapping("/delete")
+	public String delete(HttpSession session) {
+		SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+		
+		if (sessionUser == null) {
+			return "redirect:/";
+		}
+
+        userService.deleteUser(sessionUser.getId());
+
+        // 로그인 세션 제거
+	    session.removeAttribute("sessionUser");
+
+        // 탈퇴 후 메인 페이지나 안내 페이지로 이동
+        return "redirect:/";
+	}
+
+	/* ===================== 회원수정 프로세스 ===================== */
+	/**
+	 * 회원 수정
+	 */
+	@PostMapping("/update")
+	public String update(@ModelAttribute UpdateUserRequestDto dto,
+						HttpSession session,
+						Model model) {
+		SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+		// 로그인 검증
+		if (sessionUser == null) {
+			return "redirect:/";
+		}
+		// 요청 ID랑 로그인 ID 동일성 검증
+		if (!(sessionUser.getUserId().equals(dto.getUserId()))) {
+			return "redirect:/";
+		}
+		
+		UpdateUserResponseDto response = new UpdateUserResponseDto();
+		
+		if (dto.getPassword() != null && dto.getPassword() != "") {
+			validatePassword(dto, response);
+		}
+	    if (dto.getNickname() != null && dto.getNickname() != "") {
+		    validateNickname(dto, response);
+	    }
+	    if (dto.getEmail() != null && dto.getEmail() != "") {
+		    validateEmail(dto, response);	
+	    }
+
+        sessionUser = userService.update(dto);
+
+	    // 기존 세션 속성 제거
+	    session.removeAttribute("sessionUser");
+		session.setAttribute("sessionUser", sessionUser);
+		
+		model.addAttribute("response",response);
+
+		return "user/mypage";
+	}
+	
+	private void validatePassword(UpdateUserRequestDto dto, UpdateUserResponseDto response) {
+	    Pattern pattern = Pattern.compile("[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{4,16}");
+	    
+	    if (!pattern.matcher(dto.getPassword()).matches()) {
+	        response.setPasswordMessage("비밀번호는 4~16자입니다.");
+	        dto.setPassword(null);
+	    } else {
+	    	response.setPasswordMessage("변경이 완료되었습니다.");
+	    }
+	}
+	
+	private void validateNickname(UpdateUserRequestDto dto, UpdateUserResponseDto response) {
+	    Pattern pattern = Pattern.compile("^[a-zA-Z0-9-_]{2,10}$");
+	    if (!pattern.matcher(dto.getNickname()).matches()) {
+	        response.setNicknameMessage("닉네임은 2~10자입니다.");
+	        dto.setNickname(null);
+	    } else {
+	    	response.setNicknameMessage("변경이 완료되었습니다.");
+	    }
+	}
+	
+	private void validateEmail(UpdateUserRequestDto dto, UpdateUserResponseDto response) {
+	    Pattern pattern = Pattern.compile("^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$");;
+	    if (!pattern.matcher(dto.getEmail()).matches()) {
+	        response.setEmailMessage("이메일 형식이 잘못되었습니다.");
+	        dto.setEmail(null);
+	    } else {
+	    	response.setEmailMessage("변경이 완료되었습니다.");
+	    }
 	}
 }

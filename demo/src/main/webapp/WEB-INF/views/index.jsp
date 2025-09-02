@@ -22,6 +22,10 @@
             width: 300px;
             text-align: center;
         }
+        
+        .login-form {
+        	margin-bottom: 0px;
+        }
 
         .login-container h2 {
             margin-bottom: 20px;
@@ -75,10 +79,9 @@
     </style>
 </head>
 <body>
-<jsp:include page="test.jsp" />
 <div class="login-container">
     <h2>로그인</h2>
-    <form action="/user/api/login" method="post">
+    <form class="login-form" action="/user/api/login" method="post">
         <input type="text" name="userId" placeholder="아이디" required><br>
         <div class="password-container">
 	        <input type="password" id="password" name="password" placeholder="비밀번호" required><br>
@@ -92,6 +95,9 @@
 	        </button>
         </div>
         <button class="login-btn" type="submit">로그인</button>
+    </form>
+    <form action="/user/find" method="get">
+        <button class="register-btn" type="submit">계정찾기</button>
     </form>
     <hr>
     <p>아직 계정이 없으신가요?</p>

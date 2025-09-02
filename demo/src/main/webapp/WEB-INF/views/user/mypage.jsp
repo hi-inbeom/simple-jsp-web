@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>회원정보</title>
@@ -36,7 +38,6 @@
         }
         
         .profile-row {
-            margin-bottom: 12px;
             position: relative; /* 토글 버튼 위치를 위한 relative */
             display: flex;
         }
@@ -70,6 +71,7 @@
 
         /* 버튼 스타일 */
         .edit-btn,
+        .logout-btn,
         .action-btn,
         .delete-btn {
             width: 100%; padding: 10px; margin: 5px 0;
@@ -83,45 +85,93 @@
         }
         .edit-btn:hover, .action-btn:hover { background-color: #45a049; }
 
-        .delete-btn {
+        .delete-btn,
+        .logout-btn
+        {
         	background-color: #f44336;
         }
-        .delete-btn:hover { background-color: #d32f2f; }
+        .delete-btn:hover,
+        .logout-btn:hover
+        { background-color: #d32f2f; }
+        .response-row {
+        	text-align: left;
+		    font-size: 10px;
+		    margin-bottom: 12px;
+		    display: block;
+		}
+		.response-row .success {
+		    color: green;
+		}
+		
+		.response-row .error {
+		    color: red;
+		}
     </style>
 </head>
 <body>
 
 <div class="profile-container">
-    <h2>환영합니다, <strong>${user.nickname}</strong>님!</h2>
     
-    <form id="profileForm" action="/user/update" method="post" autocomplete="off">
-        <!-- 닉네임 -->
-        <div class="profile-row">
-            <label for="nickname">닉네임</label>
-            <input type="text" id="nickname" name="nickname" value="${sessionUser.nickname}" disabled>
-        </div>
-        <!-- 이메일 -->
-        <div class="profile-row">
-            <label for="email">이메일</label>
-            <input type="email" id="email" name="email" value="${sessionUser.email}" disabled>
-        </div>
-        <!-- 비밀번호 -->
-        <div class="profile-row">
-            <label for="password">비밀번호</label>
-            <input id="password" type="password" name="password" placeholder="비밀번호 (4자 ~ 16자)" disabled>
-            <button type="button" id="togglePassword" class="toggle-password">
-                <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="eye-off">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                    <line class="cross" x1="1" y1="1" x2="23" y2="23"/>
-                </svg>
-            </button>
-        </div>
-
-        <!-- 변경하기 버튼 -->
-        <button type="button" id="editBtn" class="edit-btn">변경하기</button>
-    </form>
+	<div>
+		<svg style="display:flex; cursor:pointer;" onclick="location.href='/'" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M226.67-186.67h140v-246.66h226.66v246.66h140v-380L480-756.67l-253.33 190v380ZM160-120v-480l320-240 320 240v480H526.67v-246.67h-93.34V-120H160Zm320-352Z"/></svg>
+    	
+    	<h2>환영합니다, <strong>${sessionUser.nickname}</strong>님!</h2>
+    </div>
+    
+	<form id="profileForm" action="/user/api/update" method="post" autocomplete="off">
+	   <!-- 유저 아이디 -->
+	   <input type="hidden" name="userId" value="${sessionUser.userId}">
+		<!-- 닉네임 -->
+		<div class="profile-row">
+		    <label for="nickname">닉네임</label>
+		    <input type="text" id="nickname" name="nickname" value="${sessionUser.nickname}" disabled>
+		</div>
+		<div class="response-row">
+		    <c:if test="${not empty response.nicknameMessage}">
+		        <span class="${response.nicknameMessage == '변경이 완료되었습니다.' ? 'success' : 'error'}">
+		            ${response.nicknameMessage}
+		        </span>
+		    </c:if>
+		</div>
+		
+		<!-- 이메일 -->
+		<div class="profile-row">
+		    <label for="email">이메일</label>
+		    <input type="email" id="email" name="email" value="${sessionUser.email}" disabled>
+		</div>
+		<div class="response-row">
+		    <c:if test="${not empty response.emailMessage}">
+		        <span class="${response.emailMessage == '변경이 완료되었습니다.' ? 'success' : 'error'}">
+		            ${response.emailMessage}
+		        </span>
+		    </c:if>
+		</div>
+		
+		<!-- 비밀번호 -->
+		<div class="profile-row">
+		    <label for="password">비밀번호</label>
+		    <input id="password" type="password" name="password" placeholder="비밀번호 (4자 ~ 16자)" disabled>
+		    <button type="button" id="togglePassword" class="toggle-password">
+		        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+		             stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="eye-off">
+		            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+		            <circle cx="12" cy="12" r="3"/>
+		            <line class="cross" x1="1" y1="1" x2="23" y2="23"/>
+		        </svg>
+		    </button>
+		</div>
+		<div class="response-row">
+		    <c:if test="${not empty response.passwordMessage}">
+		        <span class="${response.passwordMessage == '변경이 완료되었습니다.' ? 'success' : 'error'}">
+		            ${response.passwordMessage}
+		        </span>
+		    </c:if>
+		</div>
+	   <!-- 변경하기 버튼 -->
+	   <button type="button" id="editBtn" class="edit-btn">변경하기</button>
+	   <!-- 로그아웃 버튼 -->
+	   <button type="button" id="logoutBtn" class="logout-btn" onclick="location.href='/user/api/logout'">로그아웃</button> 
+	</form>
 
     <div class="section-divider"></div>
 

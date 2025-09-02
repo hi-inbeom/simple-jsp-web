@@ -98,7 +98,10 @@
 </head>
 <body>
 <div class="register-container">
-    <h2>회원가입</h2>
+	<div>
+		<svg style="display:flex; cursor:pointer;" onclick="location.href='/'" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M226.67-186.67h140v-246.66h226.66v246.66h140v-380L480-756.67l-253.33 190v380ZM160-120v-480l320-240 320 240v480H526.67v-246.67h-93.34V-120H160Zm320-352Z"/></svg>
+    	<h2>회원가입</h2>
+    </div>
 	<form:form modelAttribute="joinUserRequestDto" action="/user/api/register" method="post" autocomplete="off">
 	    <div class="form-group">
 	        <form:input path="userId" placeholder="아이디"/>
@@ -117,7 +120,7 @@
 		            </svg>
 		        </button>
 		    </div>
-		    <form:errors path="password" cssClass="error"/>
+    <form:errors path="password" cssClass="error"/>
 		</div>
 	
 	    <div class="form-group">

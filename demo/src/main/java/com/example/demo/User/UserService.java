@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.User.Dto.JoinUserRequestDto;
 import com.example.demo.User.Dto.LoginUserRequestDto;
+import com.example.demo.User.Dto.UpdateUserRequestDto;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -36,6 +38,22 @@ public class UserService {
     	User user = userDao.findByUserId(dto.getUserId());
     	return makeSessionUser(user);
     }
+    
+    /**
+     * 회원 탈퇴
+     */
+	public void deleteUser(Long id) {
+		userDao.delete(id);
+	}
+	
+	/**
+	 * 회원 수정
+	 */
+	public SessionUser update(@Valid UpdateUserRequestDto dto) {
+		userDao.update(dto.toVo());
+		User user = userDao.findByUserId(dto.getUserId());
+		return makeSessionUser(user);
+	}
     
     
     /**

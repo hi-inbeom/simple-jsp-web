@@ -36,6 +36,11 @@ public class UserController {
 	 */
 	@GetMapping("/mypage")
 	public String mypage(HttpSession session) {
+	    SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+
+	    if (sessionUser == null) {
+	        return "redirect:/";
+	    }
 		return "user/mypage";
 	}
 }

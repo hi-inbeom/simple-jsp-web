@@ -36,15 +36,23 @@
     </select>
 
     <!-- 유저 수정 -->
-    <update id="update" parameterType="com.example.demo.User.User">
-        UPDATE user
-        SET
-            password = #{password},
-            nickname = #{nickname},
-            email = #{email},
-            updated_at = NOW()
-        WHERE id = #{id}
-    </update>
+	<update id="update" parameterType="com.example.demo.User.User">
+	    UPDATE user
+	    <set>
+	        <if test="password != null and password != ''">
+	            password = #{password},
+	        </if>
+	        <if test="nickname != null and nickname != ''">
+	            nickname = #{nickname},
+	        </if>
+	        <if test="email != null and email != ''">
+	            email = #{email},
+	        </if>
+	        updated_at = NOW()
+	    </set>
+	    WHERE user_id = #{userId}
+	</update>
+
 
     <!-- 유저 삭제 -->
     <delete id="delete" parameterType="Long">
