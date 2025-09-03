@@ -1,0 +1,59 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>게시글 작성</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+        .write-container {
+            width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 { text-align: center; margin-bottom: 20px; }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%; padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        textarea { height: 200px; resize: vertical; }
+        .action-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none; border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .action-btn:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+<div class="write-container">
+    <h2>게시글 작성</h2>
+    <form action="/posts/create" method="post">
+        <div class="form-group">
+            <input type="text" name="title" placeholder="제목" required>
+        </div>
+        <div class="form-group">
+            <textarea name="content" placeholder="내용" required></textarea>
+        </div>
+        <button type="submit" class="action-btn">작성 완료</button>
+        <button type="button" class="action-btn" onclick="location.href='/posts'">취소</button>
+    </form>
+</div>
+</body>
+</html>
