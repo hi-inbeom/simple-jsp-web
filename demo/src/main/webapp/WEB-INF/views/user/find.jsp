@@ -34,14 +34,9 @@
 		<svg style="display:flex; cursor:pointer;" onclick="location.href='/'" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M226.67-186.67h140v-246.66h226.66v246.66h140v-380L480-756.67l-253.33 190v380ZM160-120v-480l320-240 320 240v480H526.67v-246.67h-93.34V-120H160Zm320-352Z"/></svg>
     	<h2>계정찾기</h2>
     </div>
-    <form action="/user/findId" method="post">
+    <form action="/user/api/find" method="post">
         <input type="email" name="email" placeholder="가입된 이메일" required><br>
-        <button type="submit">아이디 찾기</button>
-    </form>
-    <form action="/user/findPwd" method="post">
-        <input type="text" name="userId" placeholder="아이디" required><br>
-        <input type="email" name="email" placeholder="가입된 이메일" required><br>
-        <button type="submit">비밀번호 재설정</button>
+        <button type="submit">계정 찾기</button>
     </form>
 </div>
 </body>

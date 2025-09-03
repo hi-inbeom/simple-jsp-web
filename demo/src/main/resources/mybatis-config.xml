@@ -7,6 +7,6 @@
 	</settings>
 	
 	<mappers>
-		<mapper resource="mappers/auth-mapper.xml"/>
+		<mapper resource="mappers/UserMapper.xml"/>
 	</mappers>
 </configuration>

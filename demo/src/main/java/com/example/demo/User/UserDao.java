@@ -50,4 +50,8 @@ public class UserDao {
     public int delete(Long id) {
         return sqlSession.delete(NAMESPACE + "delete", id);
     }
+
+	public User findByEmail(String email) {
+		return sqlSession.selectOne(NAMESPACE + "findByEmail", email);
+	}
 }
