@@ -8,10 +8,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.User.Dto.JoinUserRequestDto;
+import com.example.demo.User.Dto.LoginUserDto;
 import com.example.demo.User.Dto.LoginUserRequestDto;
 import com.example.demo.User.Dto.UpdateUserRequestDto;
 import com.example.demo.User.Dto.UpdateUserResponseDto;
@@ -33,11 +34,11 @@ public class UserApiController {
 	 */
 	@PostMapping("/login")
 	public String login(@Valid @ModelAttribute LoginUserRequestDto dto, HttpSession session) {
-        SessionUser sessionUser = userService.login(dto);
+        LoginUserDto loginUserDto = userService.login(dto);
 
 	    // 기존 세션 속성 제거
-	    session.removeAttribute("sessionUser");
-		session.setAttribute("sessionUser", sessionUser);
+	    session.removeAttribute("LoginUser");
+		session.setAttribute("LoginUser", loginUserDto);
 
 		return "redirect:/";
 	}
@@ -47,7 +48,7 @@ public class UserApiController {
 	 */
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-	    session.removeAttribute("sessionUser");
+	    session.removeAttribute("LoginUser");
 		return "redirect:/";
 	}
 
@@ -64,11 +65,11 @@ public class UserApiController {
 			return "user/register";
 		}
 		
-        SessionUser sessionUser = userService.register(dto);
+        LoginUserDto loginUserDto = userService.register(dto);
 
 	    // 기존 세션 속성 제거
-	    session.removeAttribute("sessionUser");
-		session.setAttribute("sessionUser", sessionUser);
+	    session.removeAttribute("LoginUser");
+		session.setAttribute("LoginUser", loginUserDto);
 
 		return "redirect:/";
 	}
@@ -79,37 +80,34 @@ public class UserApiController {
 	 */
 	@PostMapping("/delete")
 	public String delete(HttpSession session) {
-		SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+		LoginUserDto loginUserDto = (LoginUserDto) session.getAttribute("LoginUser");
 		
-		if (sessionUser == null) {
+		if (loginUserDto == null) {
 			return "redirect:/";
 		}
 
-        userService.deleteUser(sessionUser.getId());
+        userService.deleteUser(loginUserDto.getId());
 
         // 로그인 세션 제거
-	    session.removeAttribute("sessionUser");
+	    session.removeAttribute("LoginUser");
 
         // 탈퇴 후 메인 페이지나 안내 페이지로 이동
         return "redirect:/";
 	}
 	
-	/* ===================== 회원수정 프로세스 ===================== */
+	/* ===================== 회원찾기 프로세스 ===================== */
 	/**
 	 * 회원 찾기
 	 */
-	public String find(@RequestBody String email, HttpSession session) {
-		if (email == null || email == "") {
-			return "redirect:/user/find";
-		}
-		SessionUser sessionUser = userService.find(email);
-		
-        // 로그인 세션 제거
-	    session.removeAttribute("sessionUser");
-		session.setAttribute("sessionUser", sessionUser);
-	    
-		
-		return "redirect:/";
+	@PostMapping("/find")
+	public String find(@RequestParam("email") String email, HttpSession session) {
+	    if (email == null || email.trim().isEmpty()) {
+	        return "redirect:/user/find";
+	    }
+	    LoginUserDto loginUserDto = userService.find(email);
+
+	    session.setAttribute("LoginUser", loginUserDto);
+	    return "redirect:/";
 	}
 
 	/* ===================== 회원수정 프로세스 ===================== */
@@ -120,13 +118,13 @@ public class UserApiController {
 	public String update(@ModelAttribute UpdateUserRequestDto dto,
 						HttpSession session,
 						Model model) {
-		SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+		LoginUserDto loginUserDto = (LoginUserDto) session.getAttribute("LoginUser");
 		// 로그인 검증
-		if (sessionUser == null) {
+		if (loginUserDto == null) {
 			return "redirect:/";
 		}
 		// 요청 ID랑 로그인 ID 동일성 검증
-		if (!(sessionUser.getUserId().equals(dto.getUserId()))) {
+		if (!(loginUserDto.getUserId().equals(dto.getUserId()))) {
 			return "redirect:/";
 		}
 		
@@ -142,11 +140,11 @@ public class UserApiController {
 		    validateEmail(dto, response);	
 	    }
 
-        sessionUser = userService.update(dto);
+        loginUserDto = userService.update(dto);
 
 	    // 기존 세션 속성 제거
-	    session.removeAttribute("sessionUser");
-		session.setAttribute("sessionUser", sessionUser);
+	    session.removeAttribute("LoginUser");
+		session.setAttribute("LoginUser", loginUserDto);
 		
 		model.addAttribute("response",response);
 

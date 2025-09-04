@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.User.Dto.JoinUserRequestDto;
+import com.example.demo.User.Dto.LoginUserDto;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +37,9 @@ public class UserController {
 	 */
 	@GetMapping("/mypage")
 	public String mypage(HttpSession session) {
-	    SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+	    LoginUserDto loginUserDto = (LoginUserDto) session.getAttribute("LoginUser");
 
-	    if (sessionUser == null) {
+	    if (loginUserDto == null) {
 	        return "redirect:/";
 	    }
 		return "user/mypage";

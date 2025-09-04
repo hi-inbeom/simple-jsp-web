@@ -11,7 +11,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(HttpSession session) {
-    	if (session.getAttribute("sessionUser") != null) {
+    	if (session.getAttribute("LoginUser") != null) {
     		return "redirect:/user/mypage";
     	}
     	

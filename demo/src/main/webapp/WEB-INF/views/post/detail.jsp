@@ -52,22 +52,20 @@
 </head>
 <body>
 <div class="detail-container">
-    <h2>${post.title}</h2>
+    <h2>${post.postTitle}</h2>
     <div class="post-info">
-        <span>작성자: ${post.author}</span>
-        <span>작성일: ${post.createdDate}</span>
+        <span>작성자: ${post.postWriter}</span>
+        <span>작성일: ${post.createdAt}</span>
     </div>
-    <div class="post-content">
-        ${post.content}
-    </div>
+    <div class="post-content">${post.postContent}</div>
 
     <div>
-        <button class="action-btn" onclick="location.href='/posts'">목록으로</button>
+        <button class="action-btn" onclick="location.href='/post/list'">목록으로</button>
 
         <!-- 작성자인 경우에만 수정/삭제 버튼 표시 -->
-        <c:if test="${sessionUser.userId == post.authorId}">
-            <button class="action-btn" onclick="location.href='/posts/edit/${post.id}'">수정</button>
-            <form action="/posts/delete/${post.id}" method="post" style="display:inline;">
+        <c:if test="${LoginUser.userId == post.postWriter}">
+            <button class="action-btn" onclick="location.href='/post/edit/${post.id}'">수정</button>
+            <form action="/post/api/delete/${post.id}" method="post" style="display:inline;">
                 <button type="submit" class="delete-btn" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
             </form>
         </c:if>

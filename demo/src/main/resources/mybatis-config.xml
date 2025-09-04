@@ -5,8 +5,4 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
-	
-	<mappers>
-		<mapper resource="mappers/UserMapper.xml"/>
-	</mappers>
 </configuration>

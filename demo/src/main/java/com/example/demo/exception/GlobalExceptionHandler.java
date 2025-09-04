@@ -1,10 +1,8 @@
-package com.example.demo.common;
+package com.example.demo.exception;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.example.demo.User.UserException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

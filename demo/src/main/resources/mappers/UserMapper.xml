@@ -60,9 +60,9 @@
     </delete>
     
     <!-- 아이디로 유저 조회 -->
-    <select id="findByUserId" parameterType="String" resultMap="UserResultMap">
-        SELECT *
-        FROM user
-        WHERE email = #{email}
-    </select>
+	<select id="findByEmail" parameterType="String" resultMap="UserResultMap">
+	    SELECT *
+	    FROM user
+	    WHERE email = #{value}
+	</select>
 </mapper>

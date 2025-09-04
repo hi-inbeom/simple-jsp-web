@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PostMapper">
+    <!-- Post 매핑 -->
+    <resultMap id="PostResultMap" type="com.example.demo.Post.Post">
+        <id property="id" column="id"/>
+        <result property="postTitle" column="post_title"/>
+        <result property="postContent" column="post_content"/>
+        <result property="postView" column="post_view"/>
+        <result property="postWriter" column="post_writer"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <!-- 전체 게시글 개수 -->
+    <select id="findAllCnt" resultType="int">
+        SELECT COUNT(*) FROM post
+    </select>
+
+    <!-- 페이지네이션 게시글 목록 -->
+    <select id="findAll" parameterType="map" resultMap="PostResultMap">
+        SELECT 
+            id,
+            post_title,
+            post_content,
+            post_view,
+            post_writer,
+            created_at,
+            updated_at
+        FROM post
+        ORDER BY id DESC
+        LIMIT #{startIndex}, #{size}
+    </select>
+
+    <!-- 게시글 단건 조회 -->
+    <select id="findById" parameterType="long" resultMap="PostResultMap">
+        SELECT * FROM post WHERE id = #{id}
+    </select>
+
+
+    <!-- 게시글 수정 -->
+    <update id="update" parameterType="com.example.demo.Post.Post">
+        UPDATE post
+        <set>
+            <if test="postTitle != null and postTitle != ''">
+                post_title = #{postTitle},
+            </if>
+            <if test="postContent != null and postContent != ''">
+                post_content = #{postContent},
+            </if>
+            updated_at = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 게시글 삭제 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM post WHERE id = #{id}
+    </delete>
+    
+    <!-- 게시글 등록 -->
+	<insert id="insert" parameterType="com.example.demo.Post.Post">
+	    INSERT INTO post (post_title, post_content, post_writer, post_view, created_at)
+	    VALUES (#{postTitle}, #{postContent}, #{postWriter}, 0, NOW())
+	</insert>
+
+</mapper>

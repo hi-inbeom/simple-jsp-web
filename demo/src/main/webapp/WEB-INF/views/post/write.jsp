@@ -16,6 +16,10 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
+        .form-button {
+            display: flex;
+            justify-content: flex-end;
+        }
         h2 { text-align: center; margin-bottom: 20px; }
         .form-group {
             margin-bottom: 15px;
@@ -30,13 +34,11 @@
         }
         textarea { height: 200px; resize: vertical; }
         .action-btn {
-            margin-top: 20px;
             padding: 10px;
             background-color: #4CAF50;
             color: white;
             border: none; border-radius: 6px;
             cursor: pointer;
-            margin-right: 10px;
         }
         .action-btn:hover { background-color: #45a049; }
     </style>
@@ -44,15 +46,18 @@
 <body>
 <div class="write-container">
     <h2>게시글 작성</h2>
-    <form action="/posts/create" method="post">
+    <form action="/post/api/write" method="post">
+    	<input type="hidden" name="postWriter" value="${LoginUser.userId}">
         <div class="form-group">
-            <input type="text" name="title" placeholder="제목" required>
+            <input type="text" name="postTitle" placeholder="제목" required>
         </div>
         <div class="form-group">
-            <textarea name="content" placeholder="내용" required></textarea>
+            <textarea name="postContent" placeholder="내용" required></textarea>
         </div>
-        <button type="submit" class="action-btn">작성 완료</button>
-        <button type="button" class="action-btn" onclick="location.href='/posts'">취소</button>
+        
+        <div class="form-button">
+            <button type="submit" class="action-btn">작성 완료</button>
+        </div>
     </form>
 </div>
 </body>

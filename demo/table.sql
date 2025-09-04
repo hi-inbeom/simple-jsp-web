@@ -8,3 +8,16 @@ CREATE TABLE user (
     created_at TIMESTAMP,                       -- 등록일
     updated_at TIMESTAMP                        -- 수정일
 );
+
+CREATE TABLE post (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,       -- 기본키
+    post_title VARCHAR(255) NOT NULL,           -- 게시글 제목
+    post_content TEXT NOT NULL,                 -- 게시글 내용
+    post_view BIGINT NOT NULL DEFAULT 0,        -- 조회수 (기본값 0)
+    post_writer VARCHAR(50),                    -- 작성자 (user.user_id와 매칭 가능)
+    created_at TIMESTAMP,                       -- 등록일
+    updated_at TIMESTAMP                        -- 수정일
+);
+
+
+

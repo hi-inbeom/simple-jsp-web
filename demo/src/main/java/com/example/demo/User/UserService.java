@@ -4,8 +4,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.User.Dto.JoinUserRequestDto;
+import com.example.demo.User.Dto.LoginUserDto;
 import com.example.demo.User.Dto.LoginUserRequestDto;
 import com.example.demo.User.Dto.UpdateUserRequestDto;
+import com.example.demo.exception.UserException;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,23 +22,23 @@ public class UserService {
     /**
      * 아이디로 유저 조회
      */
-    public SessionUser login(LoginUserRequestDto dto) {
+    public LoginUserDto login(LoginUserRequestDto dto) {
 		User user = userDao.findByUserId(dto.getUserId());
         
         validatePassword(dto.getPassword(), user.getPassword());
 
-        // user → SessionUser 변환
-        return makeSessionUser(user);
+        // user → LoginUser 변환
+        return makeLoginUser(user);
     }
 
     /**
      * 회원가입
      */
-    public SessionUser register(JoinUserRequestDto dto) {
+    public LoginUserDto register(JoinUserRequestDto dto) {
     	validateDuplicationUserId(dto.getUserId());
     	userDao.register(dto.toVo());
     	User user = userDao.findByUserId(dto.getUserId());
-    	return makeSessionUser(user);
+    	return makeLoginUser(user);
     }
     
     /**
@@ -49,27 +51,27 @@ public class UserService {
 	/**
 	 * 회원 수정
 	 */
-	public SessionUser update(@Valid UpdateUserRequestDto dto) {
+	public LoginUserDto update(@Valid UpdateUserRequestDto dto) {
 		userDao.update(dto.toVo());
 		User user = userDao.findByUserId(dto.getUserId());
-		return makeSessionUser(user);
+		return makeLoginUser(user);
 	}
 	
 	/**
 	 * 계정찾기
 	 * @return 
 	 */
-	public SessionUser find(String email) {
+	public LoginUserDto find(String email) {
 		User user = userDao.findByEmail(email);
-		return makeSessionUser(user);
+		return makeLoginUser(user);
 	}
     
     
     /**
      * VO -> DTO
      */
-    private SessionUser makeSessionUser(User user) {
-    	return SessionUser.builder()
+    private LoginUserDto makeLoginUser(User user) {
+    	return LoginUserDto.builder()
                 .id(user.getId())
                 .userId(user.getUserId())
                 .nickname(user.getNickname())

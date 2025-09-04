@@ -1,4 +1,4 @@
-package com.example.demo.User;
+package com.example.demo.User.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SessionUser {
+public class LoginUserDto {
     private Long id;
     private String userId;
     private String nickname;
@@ -19,8 +19,8 @@ public class SessionUser {
     private int role;
 
     // 임시 생성 메서드 (테스트용)
-    public static SessionUser tempUser() {
-        return SessionUser.builder()
+    public static LoginUserDto tempUser() {
+        return LoginUserDto.builder()
                 .id(1L)
                 .userId("tempUser")
                 .nickname("임시닉네임")

@@ -44,16 +44,18 @@
 <body>
 <div class="modify-container">
     <h2>게시글 수정</h2>
-    <form action="/posts/update/${post.id}" method="post">
-        <div class="form-group">
-            <input type="text" name="title" placeholder="제목" value="${post.title}" required>
-        </div>
-        <div class="form-group">
-            <textarea name="content" placeholder="내용" required>${post.content}</textarea>
-        </div>
-        <button type="submit" class="action-btn">수정 완료</button>
-        <button type="button" class="action-btn" onclick="location.href='/posts/view/${post.id}'">취소</button>
-    </form>
+	<form action="/post/api/modify" method="post">
+		<input type="hidden" name="id" value="${post.id}">
+		<input type="hidden" name="postWriter" value="${LoginUser.userId}">
+	    <div class="form-group">
+	        <input type="text" name="postTitle" placeholder="제목" value="${post.postTitle}" required>
+	    </div>
+	    <div class="form-group">
+	        <textarea name="postContent" placeholder="내용" required>${post.postContent}</textarea>
+	    </div>
+	    <button type="submit" class="action-btn">수정 완료</button>
+	    <button type="button" class="action-btn" onclick="location.href='/post/detail/${post.id}'">취소</button>
+	</form>
 </div>
 </body>
 </html>

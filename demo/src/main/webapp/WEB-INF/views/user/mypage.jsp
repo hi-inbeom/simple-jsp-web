@@ -115,16 +115,16 @@
 	<div>
 		<svg style="display:flex; cursor:pointer;" onclick="location.href='/'" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M226.67-186.67h140v-246.66h226.66v246.66h140v-380L480-756.67l-253.33 190v380ZM160-120v-480l320-240 320 240v480H526.67v-246.67h-93.34V-120H160Zm320-352Z"/></svg>
     	
-    	<h2>환영합니다, <strong>${sessionUser.nickname}</strong>님!</h2>
+    	<h2>환영합니다, <strong>${LoginUser.nickname}</strong>님!</h2>
     </div>
     
 	<form id="profileForm" action="/user/api/update" method="post" autocomplete="off">
 	   <!-- 유저 아이디 -->
-	   <input type="hidden" name="userId" value="${sessionUser.userId}">
+	   <input type="hidden" name="userId" value="${LoginUser.userId}">
 		<!-- 닉네임 -->
 		<div class="profile-row">
 		    <label for="nickname">닉네임</label>
-		    <input type="text" id="nickname" name="nickname" value="${sessionUser.nickname}" disabled>
+		    <input type="text" id="nickname" name="nickname" value="${LoginUser.nickname}" disabled>
 		</div>
 		<div class="response-row">
 		    <c:if test="${not empty response.nicknameMessage}">
@@ -137,7 +137,7 @@
 		<!-- 이메일 -->
 		<div class="profile-row">
 		    <label for="email">이메일</label>
-		    <input type="email" id="email" name="email" value="${sessionUser.email}" disabled>
+		    <input type="email" id="email" name="email" value="${LoginUser.email}" disabled>
 		</div>
 		<div class="response-row">
 		    <c:if test="${not empty response.emailMessage}">
@@ -176,8 +176,8 @@
     <div class="section-divider"></div>
 
     <!-- 게시물 보기 버튼 -->
-    <button class="action-btn" onclick="location.href='/posts/all'">모든 게시물 보기</button>
-    <button class="action-btn" onclick="location.href='/posts/my'">작성 게시물 보기</button>
+    <button class="action-btn" onclick="location.href='/post/list'">모든 게시물 보기</button>
+    <button class="action-btn" onclick="location.href='/post/my'">작성 게시물 보기</button>
 
     <div class="section-divider"></div>
 
